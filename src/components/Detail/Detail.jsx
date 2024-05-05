@@ -38,6 +38,7 @@ function Detail() {
           <div className="gridItem">Something</div>
         </Grid>
       </Grid>
+      <a href="./login"><button className="signout">Sign Out</button></a>
     </div>
   );
 }
