@@ -8,7 +8,7 @@
 
 #signup-rec1 {
     width: 400px;
-    height: 460px;
+    height: 440px;
     display: flex;
     margin: auto;
     margin-top: 50px;
@@ -42,7 +42,7 @@
 
 #signup-rec1 .type-signup {
     width: 250px;
-    margin-top: 240px;
+    margin-top: 220px;
     position: absolute;
     left: 50%;
     right: 50%;
@@ -50,7 +50,6 @@
 }
 
 #signup-rec1 .email,
-#signup-rec1 .fullName,
 #signup-rec1 .username,
 #signup-rec1 .password {
     width: 250px;
@@ -69,7 +68,7 @@
 #signup-rec1 .signup {
     width: 250px;
     height: 40px;
-    margin-top: 380px;
+    margin-top: 350px;
     position: absolute;
     left: 50%;
     right: 50%;

@@ -7,7 +7,7 @@
 
 #detail {
     background-color: #efefef;
-    height: 113%;
+    height: 137%;
 }
 
 .grid {
@@ -30,7 +30,7 @@
     cursor: pointer;
 }
 
-.today {
+.hourly, .daily {
     font-size: 25px;
     font-weight: 400;
     color: #000;

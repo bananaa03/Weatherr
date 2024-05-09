@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SignUp.css";
 import axios from "axios";
 
 function SignUp() {
+  const [formData, setFormData] = useState({
+    email: "",
+    username: "",
+    password: ""
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
   const handleSignUp = async (event) => {
     event.preventDefault();
-    const email = event.target.elements.email.value;
-    const fullName = event.target.elements.fullName.value;
-    const username = event.target.elements.username.value;
-    const password = event.target.elements.password.value;
 
     try {
-      const response = await axios.post("http://localhost:3000/users/signup", {
-        email: email,
-        fullName: fullName,
-        username: username,
-        password: password,
-      });
+      const response = await axios.post("http://localhost:3000/users/signup", formData);
       console.log(response.data); // In ra dữ liệu phản hồi từ backend
       // Xử lý dữ liệu phản hồi ở đây (ví dụ: chuyển hướng đến trang đăng nhập)
     } catch (error) {
@@ -37,20 +42,19 @@ function SignUp() {
           className="type-signup"
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <input type="text" className="email" placeholder="Email" />
-          <input type="text" className="fullName" placeholder="Full Name" />
-          <input type="text" className="username" defaultValue="Username" />
-          <input type="password" className="password" placeholder="Password" />
+          <input type="text" name="email" value={formData.email} onChange={handleInputChange} className="email" placeholder="Email" />
+          <input type="text" name="username" value={formData.username} onChange={handleInputChange} className="username" placeholder="Tên người dùng" />
+          <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="password" placeholder="Mật khẩu" />
         </div>
         <button className="signup" onClick={handleSignUp}>
-          Sign up
+          Đăng ký
         </button>
       </div>
 
       <div id="signup-rec2">
-        <p className="have-an-acc">Have an account?</p>
+        <p className="have-an-acc">Đã có tài khoản?</p>
         <a href="./login" className="login">
-          Log in
+          Đăng nhập
         </a>
       </div>
     </div>
