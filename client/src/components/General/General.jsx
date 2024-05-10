@@ -23,13 +23,13 @@ function General() {
         alt={isRaining ? "rainy" : "sunny"}
       />
       <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
-        <h1 className="temp">31</h1>
+        <h1 className="temp">33</h1>
         <h2 className="celcius">°C</h2>
       </div>
       <h3 className="status">{isRaining ? "Rainy" : "Sunny"}</h3>
       <div className="line"></div>
-      <p className="dmy">Friday, 21-July-2023</p>
-      <p className="hours">12:44 PM</p>
+      <p className="dmy">Thursday, May-8-2024</p>
+      <p className="hours">12:44 AM</p>
     </div>
   );
 }

@@ -7,7 +7,11 @@
 
 #detail {
     background-color: #efefef;
-    height: 137%;
+    height: 141%;
+}
+
+.activeTabButton {
+    border-bottom: 2px solid #000; 
 }
 
 .grid {
@@ -28,14 +32,6 @@
 .gridItem:hover {
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-}
-
-.hourly, .daily {
-    font-size: 25px;
-    font-weight: 400;
-    color: #000;
-    margin-left: 100px;
-    margin-top: 20px;
 }
 
 .signout {
