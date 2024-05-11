@@ -13,33 +13,33 @@ from django.core.files.storage import default_storage
 
 # Create your views here.
 @csrf_exempt
-def dataApi(request,id=0):
-    if request.method=='GET':
+def dataApi(request, id=0):
+    if request.method == 'GET':
         datas = Data.objects.all()
         datas_serializer = DataSerializer(datas, many=True)
         return JsonResponse(datas_serializer.data, safe=False)
 
-    elif request.method=='POST':
-        data_data=JSONParser().parse(request)
-        data_serializer = DataSerializer(data=data_serializer)
+    elif request.method == 'POST':
+        data_data = JSONParser().parse(request)
+        data_serializer = DataSerializer(data=data_data)
         if data_serializer.is_valid():
             data_serializer.save()
-            return JsonResponse("Added Successfully!!" , safe=False)
-        return JsonResponse("Failed to Add.",safe=False)
-    
-    elif request.method=='PUT':
+            return JsonResponse("Added Successfully!!", safe=False)
+        return JsonResponse("Failed to Add.", safe=False)
+
+    elif request.method == 'PUT':
         data_data = JSONParser().parse(request)
-        data=Data.objects.get(dataId=data_data['DepartmentId'])
-        data_serializer=DataSerializer(data,data=data_serializer)
+        data = Data.objects.get(dataId=data_data['dataId'])
+        data_serializer = DataSerializer(data, data=data_data)
         if data_serializer.is_valid():
             data_serializer.save()
             return JsonResponse("Updated Successfully!!", safe=False)
         return JsonResponse("Failed to Update.", safe=False)
 
-    elif request.method=='DELETE':
-        data=Data.objects.get(dataId=id)
+    elif request.method == 'DELETE':
+        data = Data.objects.get(dataId=id)
         data.delete()
-        return JsonResponse("Deleted Succeffully!!", safe=False)
+        return JsonResponse("Deleted Successfully!!", safe=False)
 
 # @csrf_exempt
 # def employeeApi(request,id=0):
