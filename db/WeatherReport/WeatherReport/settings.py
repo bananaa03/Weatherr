@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'WeatherApp.apps.WeatherappConfig',
-    'rest_framework'
+    'rest_framework',
+    'Data.apps.DataConfig'
 ]
 CORS_ORIGIN_ALLOWED_ALL = True
 
