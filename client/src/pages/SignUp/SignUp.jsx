@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const navigate=useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -21,8 +23,9 @@ function SignUp() {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/users/signup", formData);
+      const response = await axios.post("http://127.0.0.1:8000/api/user/register/", formData);
       console.log(response.data); // In ra dữ liệu phản hồi từ backend
+      navigate("../login");
       // Xử lý dữ liệu phản hồi ở đây (ví dụ: chuyển hướng đến trang đăng nhập)
     } catch (error) {
       console.error(error.response.data); // In ra thông báo lỗi từ backend
@@ -46,7 +49,7 @@ function SignUp() {
           <input type="text" name="username" value={formData.username} onChange={handleInputChange} className="username" placeholder="Tên người dùng" />
           <input type="password" name="password" value={formData.password} onChange={handleInputChange} className="password" placeholder="Mật khẩu" />
         </div>
-        <button className="signup" onClick={handleSignUp}>
+        <button className="signup" style={{cursor:'pointer'}} onClick={handleSignUp}>
           Đăng ký
         </button>
       </div>

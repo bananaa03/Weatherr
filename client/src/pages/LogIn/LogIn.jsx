@@ -1,24 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import "./LogIn.css";
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
 
 function LogIn() {
+  const navigate=useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    password: ""
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const email = event.target.elements.email.value;
-    const password = event.target.elements.password.value;
-    
     try {
-        const response = await axios.post('http://localhost:3000/users/login', {
-            email: email,
-            password: password
-        });
-        console.log(response.data);
-        // Xử lý dữ liệu phản hồi ở đây (ví dụ: lưu token vào localStorage)
+      const response = await axios.post("http://127.0.0.1:8000/api/token/", formData);
+      console.log(response.data);
+      // Xử lý dữ liệu phản hồi ở đây (ví dụ: chuyển hướng hoặc hiển thị thông báo)
+      alert("Thành công đăng nhập!");
+      navigate("/");
+      localStorage.setItem("token", response.data);
     } catch (error) {
-        console.error(error.response.data);
+      console.error("Error:", error.response.data);
+      // Xử lý lỗi ở đây (ví dụ: hiển thị thông báo lỗi)
     }
-};
+  };
   return (
     <div>
       <div id="rec1">
@@ -27,26 +39,41 @@ function LogIn() {
           alt="logo"
           className="logo"
         />
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="username"
-            placeholder="Username, or email"
-          />
-          <br />
-          <input type="password" className="password" placeholder="Password" />
-          <br />
-          <br />
-          <input type="submit" className="submit" value="Log in" />
-        </form>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <input
+                id="username"
+                name="username"
+                className="username"
+                value={formData.username}
+                onChange={handleInputChange}
+                required
+                placeholder="Tên người dùng"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+                className="password"
+                placeholder="Mật khẩu"
+              />
+            </div>
+            <button style={{cursor:"pointer"}} type="submit" className="submit">Đăng nhập</button>
+          </form>
       </div>
 
       <div id="rec2">
-        <p className="dont-have-acc">Don't have an account?</p>
+        <p className="dont-have-acc" >Bạn chưa có tài khoản?</p>
         <a href="./signup" className="signup">
-          Sign up
+          Đăng ký
         </a>
       </div>
+
     </div>
   );
 }
