@@ -9,12 +9,8 @@ from django.shortcuts import render
 
 from collections import defaultdict
 from operator import itemgetter
-# Create your views here.
-from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from WeatherApp.models import Data,Users
-from WeatherApp.serializers import DataSerializer,UserSerializer
 
 
 config={
