@@ -55,10 +55,11 @@ function General() {
         <h1 className="temp">{data.temp}</h1>
         <h2 className="celcius">°C</h2>
       </div>
-      <h3 className="status">{checkRainSensor}</h3>
+      {/* {checkRainSensor} */}
+      <h3 className="status">Trời nắng</h3>
       <div className="line"></div>
-      <p className="dmy">Thursday, May-8-2024</p>
-      <p className="hours">12:44 AM</p>
+      <p className="dmy">Chủ nhật, 12/05/2024</p>
+      <p className="hours">10:34 AM</p>
     </div>
   );
 }

@@ -11,11 +11,11 @@ const TemperatureChart = () => {
 
     // Mock data
     const mockData = {
-      labels: ["23h", "00h", "1h", "2h", "3h"],
+      labels: ["8 tháng 5", "9 tháng 5", "10 tháng 5", "11 tháng 5", "12 tháng 5"],
       datasets: [
         {
           label: "Temperature",
-          data: [29, 28, 27, 28, 28], // Dữ liệu nhiệt độ (ví dụ)
+          data: [35, 35.3, 34, 33.6, 34], // Dữ liệu nhiệt độ (ví dụ)
           borderColor: "rgba(255, 255, 255, 1)",
           backgroundColor: "#3eabe4"
         },

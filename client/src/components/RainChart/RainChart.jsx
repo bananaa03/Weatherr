@@ -11,11 +11,11 @@ const RainChart = () => {
 
     // Mock data
     const mockData = {
-      labels: ["23h", "00h", "1h", "2h", "3h"],
+      labels: ["8 tháng 5", "9 tháng 5", "10 tháng 5", "11 tháng 5", "12 tháng 5"],
       datasets: [
         {
           label: "Rain",
-          data: [40, 30, 14, 20, 24], // Dữ liệu lượng mưa (ví dụ)
+          data: [2.5, 3.4, 1.64, 2.1, 1.36], // Dữ liệu lượng mưa (ví dụ)
           borderColor: "rgba(255, 255, 255, 1)",
           backgroundColor: "#3eabe4"
         },

@@ -11,11 +11,11 @@ const HumidityChart = () => {
 
     // Mock data
     const mockData = {
-      labels: ["23h", "00h", "1h", "2h", "3h"],
+      labels: ["8 tháng 5", "9 tháng 5", "10 tháng 5", "11 tháng 5", "12 tháng 5"],
       datasets: [
         {
           label: "Humidity",
-          data: [87, 87, 87, 84, 85], // Dữ liệu độ ẩm (ví dụ)
+          data: [56, 59, 59, 60, 61.76], // Dữ liệu độ ẩm (ví dụ)
           borderColor: "rgba(255, 255, 255, 1)",
           backgroundColor: "#3eabe4"
         },
