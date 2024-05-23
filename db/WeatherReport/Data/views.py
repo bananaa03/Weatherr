@@ -56,8 +56,10 @@ for document_id, document_data in latest_data.items():
         temp = document_data["temp"]
         humid = document_data["humid"]
         rain = document_data["rain"]
+        date_latest_timestamp=datetime.fromtimestamp(latest_timestamp)
+        date_latest_timestamp=date_latest_timestamp.date()
         firebase_data.append({
-            "timestamp": latest_timestamp,
+            "timestamp": date_latest_timestamp,
             "document_id": document_id,
             "temp": temp,
             "humid": humid,
@@ -70,12 +72,13 @@ def index(request):
     print(f"Độ ẩm: {humid}")
     print(f"Lượng mưa: {rain}")
 
-    return render(request, 'index.html',{
-            "temp":temp,
-            "humid":humid,
-            "rain":rain,
-            "timestamp":timestamp
-        })    
+    return JsonResponse({"temp":temp,"humid": humid,"rain": rain, "timestamp": date_latest_timestamp}, safe=False)
+# render(request, 'index.html',{
+#             "temp":temp,
+#             "humid":humid,
+#             "rain":rain,
+#             "timestamp":timestamp
+#         })    
 # def __str__(self):
 #       return latest_timestamp
 
