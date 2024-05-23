@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Data
+
+class DataModelAdmin(admin.ModelAdmin):
+    list_display = ("dataId","temp","humid","rain","timestamp")
+admin.site.register(Data, DataModelAdmin)
