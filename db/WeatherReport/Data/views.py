@@ -86,36 +86,28 @@ def index(request):
 def datadays(request):
     latest_data_list = []
     # Lặp qua tất cả dữ liệu từ Firebase để tìm 5 ngày gần nhất
-    for timestamp_key, timestamp_data in data.val().items():
-        timestamp = int(timestamp_key)
-        # Tạo một dict chứa timestamp và dữ liệu của ngày hiện tại
-        current_day_data = {"timestamp": timestamp, "data": timestamp_data}
-        
-        # Kiểm tra xem danh sách latest_data_list đã đủ 5 ngày chưa
-        if len(latest_data_list) < 5:
-            latest_data_list.append(current_day_data)
-        else:
-            # Nếu đã đủ 5 ngày, thì tìm ngày có timestamp nhỏ nhất trong 5 ngày và thay thế bằng ngày hiện tại nếu timestamp của ngày hiện tại lớn hơn
-            min_timestamp_index = min(range(len(latest_data_list)), key=lambda i: latest_data_list[i]["timestamp"])
-            if timestamp > latest_data_list[min_timestamp_index]["timestamp"]:
-                latest_data_list[min_timestamp_index] = current_day_data
+    for date, data_list in daily_data.items():
+        # Chỉ lấy bản ghi đầu tiên nếu có nhiều hơn một bản ghi cho cùng một ngày
+        first_data = data_list[0]
+        latest_data_list.append({
+            "date": date,
+            "data": first_data
+        })
+
+    # Sắp xếp danh sách bản ghi theo thời gian giảm dần và chỉ lấy 5 bản ghi đầu tiên
+    latest_data_list = sorted(latest_data_list, key=lambda x: x["date"], reverse=True)[:5]
 
     firebase_data_days = []
-    latest_data_list=sorted(latest_data_list, key=lambda x: x["timestamp"], reverse=True)
     for day_data in latest_data_list:
         temp = day_data["data"].get("temp", None)
         humid = day_data["data"].get("humid", None)
         rain = day_data["data"].get("rain", None)
-        timestamp = day_data["timestamp"]
-
-        if temp is not None and humid is not None and rain is not None and timestamp is not None:
-            firebase_data_days.append({
-                "date": datetime.fromtimestamp(timestamp).date(),
-                "day": datetime.fromtimestamp(timestamp).day,
-                "temp": temp,
-                "humid": humid,
-                "rain": rain
-            })
+        firebase_data_days.append({
+            "date": day_data["date"],
+            "temp": temp,
+            "humid": humid,
+            "rain": rain
+        })
     return JsonResponse(latest_data_list, safe=False)
     
 

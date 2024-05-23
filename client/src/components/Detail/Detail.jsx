@@ -48,9 +48,9 @@ function Detail() {
         tempsArray.push(record.temp);
         rainsArray.push(record.rain);
         humidsArray.push(record.humid);
-        let timestamp_data = record.timestamp;
-        let dayOfMonth = moment.utc(timestamp_data).format("DD");
-        let month = moment.utc(timestamp_data).format("MM");
+        let timestamp_data=record.timestamp;
+        let dayOfMonth=moment.utc(timestamp_data).format("DD");
+        let month=moment.utc(timestamp_data).format("MM");
         timestampsArray.push(`${dayOfMonth} tháng ${month}`);
       });
 
