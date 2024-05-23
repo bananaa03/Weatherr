@@ -48,9 +48,11 @@ function Detail() {
         tempsArray.push(record.temp);
         rainsArray.push(record.rain);
         humidsArray.push(record.humid);
-        let timestamp_data=record.timestamp;
-        let dayOfMonth=moment.utc(timestamp_data).format("DD");
-        let month=moment.utc(timestamp_data).format("MM");
+        
+        let timestamp_data=new Date(record.timestamp*1000-new Date().getTimezoneOffset());
+        timestamp_data.setUTCHours(0, 0, 0, 0);
+        let dayOfMonth=timestamp_data.getUTCDate()-3;
+        let month=timestamp_data.getUTCMonth()+1;
         timestampsArray.push(`${dayOfMonth} tháng ${month}`);
       });
 
