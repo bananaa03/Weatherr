@@ -157,10 +157,10 @@ def weather_prediction(request):
             # Append the new prediction to the DataFrame
             new_row = {
                 'province': 'Ho Chi Minh City',
-                'max': predictions[0][0],
-                'min': predictions[0][1],
-                'rain': predictions[0][3],
-                'humidi': predictions[0][2],
+                'max': round(predictions[0][0]),
+                'min': round(predictions[0][1]),
+                'rain': round(predictions[0][3], 2),
+                'humidi': round(predictions[0][2]),
                 'date': predictions[0][3]
             }
             df = df.append(new_row, ignore_index=True)
