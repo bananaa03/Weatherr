@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import pandas as pd
 import pyrebase
 from datetime import datetime
 from Data.models import WeatherPredictionModel
@@ -148,56 +149,23 @@ def weather_prediction(request):
             'humidi': predictions[0][2],
             'rain': predictions[0][3]
         }
+        csv_path = 'source/HCM.csv'
+        df = pd.read_csv(csv_path)
+
+        # Check if the date already exists in the dataset
+        if context['date'] not in df['date'].values:
+            # Append the new prediction to the DataFrame
+            new_row = {
+                'province': 'Ho Chi Minh City',
+                'max': predictions[0][0],
+                'min': predictions[0][1],
+                'rain': predictions[0][3],
+                'humidi': predictions[0][2],
+                'date': predictions[0][3]
+            }
+            df = df.append(new_row, ignore_index=True)
+
+            # Save the updated DataFrame back to the CSV
+            df.to_csv(csv_path, index=False)
         return JsonResponse(context)
         # return render(request, 'weather_prediction.html', context)
-
-    # return render(request, 'weather_prediction.html')
-
-# @csrf_exempt
-# def SaveFile(request):
-#     file=request.FILES['myFile']
-#     file_name = default_storage.save(file.name,file)
-#     return JsonResponse(file_name,safe=False)
-#        if data.val() is None:
-#            raise ValueError("No data available in the database")
-
-#        latest_timestamp = 0
-#        latest_data = None
-
-        # Find the latest timestamp and corresponding data
-#        for timestamp_key, timestamp_data in data.val().items():
-#            timestamp = int(timestamp_key)
-#            if timestamp > latest_timestamp:
-#                latest_timestamp = timestamp
-#                latest_data = timestamp_data
-
-#        if not latest_data:
-#            raise ValueError("No data found for the latest timestamp")
-
-        # Assuming there's only one document_id per timestamp
-#        for document_id, document_data in latest_data.items():
-#            temp = document_data.get("temp", "N/A")
-#            humid = document_data.get("humid", "N/A")
-#            rain = document_data.get("rain", "N/A")
-#            break
-
-#        timestamp = datetime.fromtimestamp(latest_timestamp)
-
-#        context = {
-#            "temp": temp,
-#            "humid": humid,
-#            "rain": rain,
-#            "timestamp": timestamp,
-#        }
-
-#       print(f"Nhiệt độ: {temp}")
-#        print(f"Độ ẩm: {humid}")
-#        print(f"Lượng mưa: {rain}")
-
-#    except Exception as e:
-#        context = {
-#            "error": str(e)
-#        }
-#        print(f"Error: {str(e)}")
-
-#    return render(request, 'index.html', context)
