@@ -6,7 +6,4 @@ from django.conf import settings
 urlpatterns=[
     path('data/', views.dataApi),
     path('data/<int:id>/', views.dataApi),
-
-    #path('user/', views.dataApi),
-    #path('user/<int:id>/', views.userApi),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

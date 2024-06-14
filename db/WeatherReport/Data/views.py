@@ -126,19 +126,7 @@ def weather_prediction(request):
         # Dự đoán với dữ liệu mới
         new_data = [[year, month, day]]
         predictions = model.predict(new_data)
-
-        # # Lưu dự đoán vào cơ sở dữ liệu
-        # weather_prediction = WeatherPredictionModel(
-        #     year=year,
-        #     month=month,
-        #     day=day,
-        #     max_predicted=predictions[0][0],
-        #     min_predicted=predictions[0][1],
-        #     humidi_predicted=predictions[0][2],
-        #     rain_predicted=predictions[0][3]
-        # )
-        # weather_prediction.save()
-
+        
         # Trả về kết quả dự đoán
         context = {
             'year': year,
