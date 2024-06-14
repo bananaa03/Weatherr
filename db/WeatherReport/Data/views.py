@@ -113,7 +113,7 @@ def datadays(request):
 
 
 def weather_prediction(request):
-    # if request.method == 'GET':
+    if request.method == 'POST':
         timestamp = latest_timestamp
         year = datetime.fromtimestamp(timestamp).year
         month = datetime.fromtimestamp(timestamp).month
@@ -148,7 +148,8 @@ def weather_prediction(request):
             'humidi': predictions[0][2],
             'rain': predictions[0][3]
         }
-        return render(request, 'weather_prediction.html', context)
+        return JsonResponse(context)
+        # return render(request, 'weather_prediction.html', context)
 
     # return render(request, 'weather_prediction.html')
 

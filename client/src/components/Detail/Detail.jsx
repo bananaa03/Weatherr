@@ -14,6 +14,7 @@ function Detail() {
   const [humids, setHumids] = useState([]);
   const [rains, setRains] = useState([]);
   const [timestamps, setTimestamps] = useState([]);
+  const [prediction, setPrediction] = useState(null);
 
   const [showPopup, setShowPopup] = useState(false);
   const [selectedChart, setSelectedChart] = useState(null);
@@ -61,6 +62,30 @@ function Detail() {
     }
   }, [data]);
 
+  
+  const fetchPrediction = async () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // Months are 0-based
+    const day = currentDate.getDate();
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/predict/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ year, month, day }),
+      });
+      const predictionData = await response.json();
+      setPrediction(predictionData);
+    } catch {
+      console.log("Error fetching prediction data");
+    }
+  };
+
+  fetchPrediction();
+
   // Define functions to handle popup
   const openPopup = (chart) => {
     setSelectedChart(chart);
@@ -71,51 +96,12 @@ function Detail() {
     setShowPopup(false);
   };
 
-  // const temperatureData = {
-  //   labels: [timestamps[0], timestamps[1], timestamps[2], timestamps[3], timestamps[4]],
-  //   datasets: [
-  //     {
-  //       label: "Temperature",
-  //       data: [temps[0], temps[1], temps[2], temps[3], temps[4]],
-  //       borderColor: "rgba(255, 255, 255, 1)",
-  //       backgroundColor: "#3eabe4",
-  //       fill: false,
-  //     },
-  //   ],
-  // };
-
-  // const humidityData = {
-  //   labels: [timestamps[0], timestamps[1], timestamps[2], timestamps[3], timestamps[4]],
-  //   datasets: [
-  //     {
-  //       label: "Humidity",
-  //       data: [humids[0], humids[1], humids[2], humids[3], humids[4]],
-  //       borderColor: "rgba(255, 255, 255, 1)",
-  //       backgroundColor: "#3eabe4",
-  //       fill: false,
-  //     },
-  //   ],
-  // };
-
-  // const rainData = {
-  //   labels: [timestamps[0], timestamps[1], timestamps[2], timestamps[3], timestamps[4]],
-  //   datasets: [
-  //     {
-  //       label: "Rain",
-  //       data: [rains[0], rains[1], rains[2], rains[3], rains[4]],
-  //       borderColor: "rgba(255, 255, 255, 1)",
-  //       backgroundColor: "#3eabe4",
-  //       fill: false,
-  //     },
-  //   ],
-  // };
-
   const temperatureData = {
-    labels: ["8 tháng 5", "9 tháng 5", "10 tháng 5", "11 tháng 5", "12 tháng 5"],
+    labels: [timestamps[0], timestamps[1], timestamps[2], timestamps[3], timestamps[4]],
     datasets: [
       {
         label: "Temperature",
-        data: [35, 35.3, 34, 33.6, 34],
+        data: [temps[0], temps[1], temps[2], temps[3], temps[4]],
         borderColor: "rgba(255, 255, 255, 1)",
         backgroundColor: "#3eabe4",
         fill: false,
@@ -124,11 +110,11 @@ function Detail() {
   };
 
   const humidityData = {
-    labels: ["8 tháng 5", "9 tháng 5", "10 tháng 5", "11 tháng 5", "12 tháng 5"],
+    labels: [timestamps[0], timestamps[1], timestamps[2], timestamps[3], timestamps[4]],
     datasets: [
       {
         label: "Humidity",
-        data: [56, 59, 59, 60, 61.76],
+        data: [humids[0], humids[1], humids[2], humids[3], humids[4]],
         borderColor: "rgba(255, 255, 255, 1)",
         backgroundColor: "#3eabe4",
         fill: false,
@@ -137,17 +123,19 @@ function Detail() {
   };
 
   const rainData = {
-    labels: ["8 tháng 5", "9 tháng 5", "10 tháng 5", "11 tháng 5", "12 tháng 5"],
+    labels: [timestamps[0], timestamps[1], timestamps[2], timestamps[3], timestamps[4]],
     datasets: [
       {
         label: "Rain",
-        data: [2.5, 3.4, 1.64, 2.1, 1.36],
+        data: [rains[0], rains[1], rains[2], rains[3], rains[4]],
         borderColor: "rgba(255, 255, 255, 1)",
         backgroundColor: "#3eabe4",
         fill: false,
       },
     ],
   };
+
+
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
@@ -214,19 +202,19 @@ function Detail() {
             <Grid item xs={3.5}>
               <div className="gridItem">
                 <div>Temperature</div>
-                <div style={{ fontSize: 40, textAlign: "center", marginTop: 10 }}>34°C</div>
+                <div style={{ fontSize: 40, textAlign: "center", marginTop: 10 }}>{data[0].temp}°C</div>
               </div>
             </Grid>
             <Grid item xs={3.5}>
               <div className="gridItem">
                 <div>Humidity</div>
-                <div style={{ fontSize: 40, textAlign: "center", marginTop: 10 }}>61.76%</div>
+                <div style={{ fontSize: 40, textAlign: "center", marginTop: 10 }}>{data[0].humid}%</div>
               </div>
             </Grid>
             <Grid item xs={3.5}>
               <div className="gridItem">
                 <div>Rain</div>
-                <div style={{ fontSize: 40, textAlign: "center", marginTop: 10 }}>1.36</div>
+                <div style={{ fontSize: 40, textAlign: "center", marginTop: 10 }}>{data[0].rain}</div>
               </div>
             </Grid>
           </Grid>
@@ -239,19 +227,19 @@ function Detail() {
             <Grid item xs={3.5}>
               <div className="gridItem">
                 <div>Temperature</div>
-                <div style={{ fontSize: 30, textAlign: "center", marginTop: 10 }}>28.76°C - 35.26°C</div>
+                <div style={{ fontSize: 30, textAlign: "center", marginTop: 10 }}>{prediction.min}°C - {prediction.max}°C</div>
               </div>
             </Grid>
             <Grid item xs={3.5}>
               <div className="gridItem">
                 <div>Humidity</div>
-                <div style={{ fontSize: 30, textAlign: "center", marginTop: 10 }}>64.07%</div>
+                <div style={{ fontSize: 30, textAlign: "center", marginTop: 10 }}>{prediction.humidi}%</div>
               </div>
             </Grid>
             <Grid item xs={3.5}>
               <div className="gridItem">
                 <div>Rain</div>
-                <div style={{ fontSize: 30, textAlign: "center", marginTop: 10 }}>1.66</div>
+                <div style={{ fontSize: 30, textAlign: "center", marginTop: 10 }}>{prediction.rain}</div>
               </div>
             </Grid>
           </Grid>

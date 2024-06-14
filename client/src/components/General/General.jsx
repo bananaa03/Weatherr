@@ -6,6 +6,7 @@ function General() {
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
   // Hàm để kiểm tra cảm biến mưa và cập nhật trạng thái
   const checkRainSensor = () => {
     // Logic để kiểm tra cảm biến mưa ở đây
@@ -42,7 +43,27 @@ function General() {
       }
     };
     fetchData();
+    const intervalId = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000); // Update every second
+
+    return () => clearInterval(intervalId);
   },[]);
+  const formatDate = (date) => {
+    const days = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+    const day = days[date.getDay()];
+    const dayNumber = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+    return `${day}, ${dayNumber}/${month}/${year}`;
+  };
+
+  const formatTime = (date) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  };
   if (loading) return <div>Loading...</div>
   return (
     <div id="general">
@@ -56,10 +77,10 @@ function General() {
         <h2 className="celcius">°C</h2>
       </div>
       {/* {checkRainSensor} */}
-      <h3 className="status">Trời nắng</h3>
+      <h3 className="status">{isRaining}</h3>
       <div className="line"></div>
-      <p className="dmy">Chủ nhật, 12/05/2024</p>
-      <p className="hours">10:34 AM</p>
+      <p className="dmy">{formatDate(currentDateTime)}</p>
+      <p className="hours">{formatTime(currentDateTime)}</p>
     </div>
   );
 }
